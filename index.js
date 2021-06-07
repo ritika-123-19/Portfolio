@@ -1,20 +1,15 @@
-const express = require("express");
-const cons = require('consolidate');
-const https = require("https");
-const path = require("path");
-const static_path = path.join(__dirname, "./views");
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-app.use(express.static(static_path));
-app.engine('html', cons.swig)
-app.set('view engine', 'html');
-app.set('views', static_path);
-
-app.get("/", (req, res) => {
-    res.render("index");
-  });
-
-app.listen(PORT, () => {
-    console.log(`Server is running at ${PORT} `);
-})
+var express = require("express");
+ 
+var app = express();
+ 
+app.use(express.static('public'));
+ 
+//make way for some custom css, js and images
+app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/js', express.static(__dirname + '/public/js'));
+app.use('/images', express.static(__dirname + '/public/images'));
+ 
+var server = app.listen(8081, function(){
+    var port = server.address().port;
+    console.log("Server started at http://localhost:%s", port);
+});
