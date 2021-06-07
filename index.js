@@ -1,6 +1,6 @@
-var express = require("express");
-
-var app = express();
+const express = require("express");
+const cons = require('consolidate');
+const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.static('public'));
 
@@ -8,6 +8,8 @@ app.use(express.static('public'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/images', express.static(__dirname + '/public/images'));
+app.engine('html', cons.swig)
+app.set('view engine', 'html');
 
 app.get("/", (req, res) => {
     res.render("index");
